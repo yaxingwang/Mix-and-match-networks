@@ -12,7 +12,7 @@
 <br>
 <img src='RGBD/images/drawing1.png' align="center" width=784 height='180'>
 
-<br>
+
 # Overview 
 - [Dependences](#dependences)
 - [Installation](#installtion)
