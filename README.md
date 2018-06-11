@@ -12,7 +12,7 @@
 <br>
 <p align="center"><img width="80%" height='80%'src="RGBD/images/comparation.png" /></p>
 <br>
-<img src='RGBD/images/drawing1.png' align="center" width=784 height='180'>
+<p align="center"><img width="100%" height='60%'src="RGBD/images/drawing1.png" /></p>
 
 
 # Overview 
