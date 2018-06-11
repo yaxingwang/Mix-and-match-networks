@@ -1,4 +1,4 @@
-<img src='RGBD/images/overview_zero-pair.pdf' align="right" width=384>
+<img src='RGBD/images/overview.png' align="right" width=384>
 
 <br><br><br>
 
