@@ -10,7 +10,7 @@
  IEEE Conference on Computer Vision and Pattern Recognition ([CVPR](http://cvpr2018.thecvf.com/)), 2018
 
 <br>
-<p align="center"><img width="100%" src="RGBD/images/comparation.png" /></p>
+<p align="center"><img width="80%" height='80%'src="RGBD/images/comparation.png" /></p>
 <br>
 <img src='RGBD/images/drawing1.png' align="center" width=784 height='180'>
 
