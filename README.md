@@ -9,5 +9,5 @@
 [Yaxing Wang](https://yaxingwang.github.io/),  [Joost van de Weijer](http://www.cvc.uab.es/LAMP/joost/), [Luis Herranz](http://www.lherranz.org/)  
  IEEE Conference on Computer Vision and Pattern Recognition ([CVPR](http://cvpr2018.thecvf.com/)), 2018
 
-<br><br><br>
+<br>
 <img src='RGBD/images/drawing1.png' align="center" width=784 height='180'>
