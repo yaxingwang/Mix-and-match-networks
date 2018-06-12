@@ -51,7 +51,7 @@ $ python test.py --test_file chedkpoints/20171109-1200/model.ckpt-7703
 ```
 # Citation
 
-If this work is useful for your research and you use the color dataset, please cite  papers:
+If this work or color dataset are useful for your research, please cite  papers:
 ```
 @article{wang2018mix,
   title={Mix and match networks: encoder-decoder alignment for zero-pair image translation},
@@ -59,7 +59,12 @@ If this work is useful for your research and you use the color dataset, please c
       journal={arXiv preprint arXiv:1804.02199},
         year={2018}
         }
- yulu???
+ @article{yu2018weakly,
+   title={Weakly Supervised Domain-Specific Color Naming Based on Attention},
+     author={Yu, Lu and Cheng, Yongmei and van de Weijer, Joost},
+       journal={arXiv preprint arXiv:1805.04385},
+         year={2018}
+         }
 
 ```
 
