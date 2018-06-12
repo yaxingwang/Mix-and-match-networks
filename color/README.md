@@ -8,8 +8,7 @@ This project is to do many-to-many mapping on color dataset.
 - [Dependences](#dependences)
 - [Installation](#installtion)
 - [Instructions](#instructions)
-- [Results](#results)
-- [References](#references)
+- [Citation](#citation)
 - [Contact](#contact)
 # Dependences 
 - Python2.7, NumPy, SciPy, NVIDIA GPU
@@ -29,7 +28,7 @@ $ cd Mix-and-match-networks/color/
 ```bash
 $ mkdir dataset 
 ```
-Unzipping the downloaded color data and moving contained two folders(`train` and `test`) into `data`
+Unzipping the downloaded color data and moving contained two folders(`train` and `test`) into `dataset`
 
 - Training 
 ```bash
@@ -40,23 +39,16 @@ During train, the loss and generated images can be monitored by tensorboard as:
 $ cd checkpoints/20180607-1244 
 $ tensorboard --logdir=./ 
 ```
-Note that '20180607-1244' is automatically generated whenever you run script
+
+Note that `20180607-1244` is automatically generated whenever you run script
 <p align="center"><img width="80%" height='50%'src="visualization_color/11_domains/synthesized_images.png" /></p>
 
 - Testing 
+
 The pretrained model is provided [here](https://drive.google.com/drive/folders/1Ny9g4_3IPxHXQirjPrhLFAZTlCEgMSIH). If you have trained model, just put it as following:
 ```bash
 $ python test.py --test_file chedkpoints/20171109-1200/model.ckpt-7703 
 ```
-
-
-
-    
-# Results 
-Using pretrained models not only get high performance, but fastly attach convergence. In following figure, we show conditional and unconditional settings.
-![unconditional_conditional](https://user-images.githubusercontent.com/16056485/40908899-5d8484be-67e8-11e8-894c-d4b19a54e48c.png)
-
-
 # Citation
 
 If this work is useful for your research and you use the color dataset, please cite  papers:
