@@ -47,6 +47,8 @@ $ tensorboard --logdir=./
 Note that `20180607-1244` is automatically generated whenever you run script
 <p align="center"><img width="80%" height='50%'src="visualization_color/11_domains/synthesized_images.png" /></p>
 
+Here we use attentaion in latest space by using 'sigmoid', note it does not influence performace without attention or not
+
 - Testing 
 
 The pretrained model is provided [here](https://drive.google.com/drive/folders/1Ny9g4_3IPxHXQirjPrhLFAZTlCEgMSIH). If you have trained model, just put it as following:
