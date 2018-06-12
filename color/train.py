@@ -7,7 +7,7 @@ import numpy as np
 import tensorflow as tf
 
 from reader import Reader
-from model import CycleGAN
+from model import MmNet
 from utils import ImagePool
 from datetime import datetime
 from utils import visualization
@@ -64,8 +64,8 @@ def train():
             number_domain=FLAGS.number_domain,
             train_file = FLAGS.train_file)
       #G_loss, D_Y_loss, F_loss, D_X_loss, fake_y, fake_x,fake_z,fake_x_from_z = cycle_gan.model()
-        G_loss, D_Y_loss, F_loss, D_X_loss = cycle_gan.model()
-        optimizers = cycle_gan.optimize(G_loss, D_Y_loss, F_loss, D_X_loss)
+        G_loss, D_Y_loss, F_loss, D_X_loss = MmNet.model()
+        optimizers = MmNet.optimize(G_loss, D_Y_loss, F_loss, D_X_loss)
         
         summary_op = tf.summary.merge_all()
         train_writer = tf.summary.FileWriter(checkpoints_dir, graph)
@@ -94,11 +94,11 @@ def train():
                 # Fake images which are corresponding to 11 domains
                 # 'domain_idx' to select which domain except for anchor to synthesize anchor doamin image
                 #Using loop to make 'domain_idx' increment and reset
-                fake_ =[cycle_gan.loss[domain_idx][-1]] +  [cycle_gan.loss[i][-2] for i in xrange(FLAGS.number_domain-1)]
+                fake_ =[MmNet.loss[domain_idx][-1]] +  [MmNet.loss[i][-2] for i in xrange(FLAGS.number_domain-1)]
                 # Output special fake images from current execution
                 fake_gene= sess.run(fake_)
                 # Building input dictionary for optimal function 
-                feed_dict={cycle_gan.fake_set[i]: fake_pool[i].query(fake_gene[i]) for i in xrange(FLAGS.number_domain)}
+                feed_dict={MmNet.fake_set[i]: fake_pool[i].query(fake_gene[i]) for i in xrange(FLAGS.number_domain)}
                 _, G_loss_val, D_Y_loss_val, F_loss_val, D_X_loss_val, summary = (
               	sess.run([optimizers, G_loss, D_Y_loss, F_loss, D_X_loss, summary_op], feed_dict))
                 train_writer.add_summary(summary, step)

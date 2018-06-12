@@ -1,13 +1,12 @@
 import __future__
 
 import os
-import pdb
 import logging
 import numpy as np
 import tensorflow as tf
 
 from reader import Reader
-from model import CycleGAN
+from model import MmNet 
 from utils import ImagePool
 from datetime import datetime
 from utils import visualization
@@ -43,7 +42,7 @@ tf.flags.DEFINE_string('saved_model','checkpoints/20171109-1200/model.ckpt-7703'
 def test():
     graph = tf.Graph()
     with graph.as_default():
-        cycle_gan = CycleGAN(
+        MmNet_model = MmNet(
             batch_size=FLAGS.batch_size,
             image_size=FLAGS.image_size,
             use_lsgan=FLAGS.use_lsgan,
@@ -55,8 +54,9 @@ def test():
             ngf=FLAGS.ngf,
             number_domain=FLAGS.number_domain,
             train_file = FLAGS.test_file)
-        G_loss, D_Y_loss, F_loss, D_X_loss = cycle_gan.model()
+        G_loss, D_Y_loss, F_loss, D_X_loss = MmNet_model.model()
         sess.run(tf.global_variables_initializer())
+        # It is batter to import trainable variables instead of all graph, for it will need lots of memory and time, even it fails
         saver = tf.train.Saver(cycle_gan.F_train_var + cycle_gan.G_train_var)
         saver.restore(sess, FLAGS.saved_model)
         acount = 1
@@ -69,12 +69,11 @@ def test():
             while not coord.should_stop():
                 # get previously generated images
                 #Probility = np.random.randint(2,size = 1)
-                fake_ =[cycle_gan.loss[domain_idx][-1]] +  [cycle_gan.loss[i][-2] for i in xrange(FLAGS.number_domain-1)]
+                fake_ =[MmNet.loss[domain_idx][-1]] +  [MmNet.loss[i][-2] for i in xrange(FLAGS.number_domain-1)]
                 fake_gene= sess.run(fake_)
                 #fake_y_val, fake_x_val,fake_z_val,fake_x_from_z_val = sess.run([fake_y, fake_x, fake_z, fake_x_from_z])
-                feed_dict={cycle_gan.fake_set[i]: fake_pool[i].query(fake_gene[i]) for i in xrange(FLAGS.number_domain)}
-                raw_image_generated_images =sess.run(cycle_gan.raw_image_generated_images,feed_dict)
-                pdb.set_trace()
+                feed_dict={MmNet.fake_set[i]: fake_pool[i].query(fake_gene[i]) for i in xrange(FLAGS.number_domain)}
+                raw_image_generated_images =sess.run(MmNet.raw_image_generated_images,feed_dict)
                 visualization(raw_image_generated_images,acount,labels)
                 acount +=1
                 domain_idx += 1

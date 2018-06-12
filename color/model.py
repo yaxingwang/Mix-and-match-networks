@@ -9,7 +9,7 @@ import pdb
 from lu_data_labels import labels
 REAL_LABEL = 0.9
 
-class CycleGAN:
+class MmNet:
   def __init__(self,
                batch_size=1,
                image_size=256,
@@ -265,7 +265,16 @@ class CycleGAN:
     self.raw_image_generated_images = self.raw_image_generated_images0+self.raw_image_generated_images1+self.raw_image_generated_images2+self.raw_image_generated_images3+self.raw_image_generated_images4+ \
                                         self.raw_image_generated_images5+self.raw_image_generated_images6+self.raw_image_generated_images7+self.raw_image_generated_images8+self.raw_image_generated_images9+ \
         				self.raw_image_generated_images10
- # 
+
+
+
+    # Save trainable variables
+    G_not_use_var = ['twin_enconder_%d'%(i+1) for i in xrange(self.number_domain -2)]
+    self.G_train_var = [v for v in self.G.variables if v.name[2:17] not in G_not_use_var ]
+
+    F_not_use_var = ['twin_deconder_%d'%(i+1) for i in xrange(self.number_domain -2)]
+    self.F_train_var = [v for v in self.F.variables if v.name[2:17] not in F_not_use_var ]
+ #  
     return self.G_y_set, self.D_y_set, self.F_x_set, self.D_x_set
   def optimize(self, G_loss, D_Y_loss, F_loss, D_X_loss):
     def make_optimizer(loss, variables, name='Adam'):
@@ -297,18 +306,17 @@ class CycleGAN:
       return learning_step
 
     # building the whole network, parameters in encoders for domains excepte for anchor are not used  as wellas parameters in decoder for anchor. To accelerate the operation of the program, unwanted parameters are not updated.
-    G_not_use_var = ['twin_enconder_%d'%(i+1) for i in xrange(self.number_domain -2)]
-    G_train_var = [v for v in self.G.variables if v.name[2:17] not in G_not_use_var ]
-    G_optimizer = make_optimizer(G_loss, G_train_var, name='Adam_G')
+
+    G_optimizer = make_optimizer(G_loss, self.G_train_var, name='Adam_G')
     #G_optimizer = make_optimizer(G_loss, self.G.variables, name='Adam_G')
     D_Y_var = self.D_set[1].variables
     for i in xrange(self.number_domain -2):
 	D_Y_var +=self.D_set[i+2].variables 
     D_Y_optimizer = make_optimizer(D_Y_loss, D_Y_var, name='Adam_D_Y')
 
-    F_not_use_var = ['twin_deconder_%d'%(i+1) for i in xrange(self.number_domain -2)]
-    F_train_var = [v for v in self.F.variables if v.name[2:17] not in F_not_use_var ]
-    F_optimizer =  make_optimizer(F_loss, F_train_var, name='Adam_F')
+
+    
+    F_optimizer =  make_optimizer(F_loss, self.F_train_var, name='Adam_F')
     D_X_optimizer = make_optimizer(D_X_loss, self.D_set[0].variables, name='Adam_D_X')
 
     with tf.control_dependencies([G_optimizer, D_Y_optimizer, F_optimizer, D_X_optimizer]):

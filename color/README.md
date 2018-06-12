@@ -7,6 +7,7 @@ This project is to do many-to-many mapping on color dataset.
 # Overview 
 - [Dependences](#dependences)
 - [Installation](#installtion)
+- [Create data](#creat data)
 - [Instructions](#instructions)
 - [Citation](#citation)
 - [Contact](#contact)
@@ -18,6 +19,9 @@ This project is to do many-to-many mapping on color dataset.
 # Installation 
 - Install tensorflow and tensorBoard
 - Opencv 
+# Create data
+We provie script to compress your data to tfrecord. `build_data.py` helps you to creat your data 
+
 # Instructions
 - Cloning the repository
 ```bash
@@ -34,7 +38,7 @@ Unzipping the downloaded color data and moving contained two folders(`train` and
 ```bash
 $ python train.py 
 ```
-During train, the loss and generated images can be monitored by tensorboard as:
+During training, the loss and generated image can be monitored by tensorboard as:
 ```bash
 $ cd checkpoints/20180607-1244 
 $ tensorboard --logdir=./ 
@@ -49,6 +53,8 @@ The pretrained model is provided [here](https://drive.google.com/drive/folders/1
 ```bash
 $ python test.py --test_file chedkpoints/20171109-1200/model.ckpt-7703 
 ```
+The transferred images will be saved in `visualization_color`
+
 # Citation
 
 If this work or color dataset are useful for your research, please cite  papers:
