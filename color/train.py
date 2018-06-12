@@ -16,7 +16,7 @@ from data_labels import labels
 
 FLAGS = tf.flags.FLAGS
 tf.flags.DEFINE_integer('batch_size', 1, 'batch size, default: 1')
-tf.flags.DEFINE_integer('image_size', 128, 'image size, default: 256')
+tf.flags.DEFINE_integer('image_size', 128, 'image size, default: 128')
 tf.flags.DEFINE_integer('number_domain', 11, 'number of doamin, default: 11')
 tf.flags.DEFINE_bool('use_lsgan', True,
                      'use lsgan (mean squared error) or cross entropy loss, default: True')
@@ -34,13 +34,10 @@ tf.flags.DEFINE_float('pool_size', 50,
                       'size of image buffer that stores previously generated images, default: 50')
 tf.flags.DEFINE_integer('ngf', 64,
                         'number of gen filters in first conv layer, default: 64')
-
-tf.flags.DEFINE_string('train_file', './dataset/domain_',
+tf.flags.DEFINE_string('train_file', './dataset/train/domain_',
                        'tfrecords file for training, default: ./dataset/domain_11.tfrecords')
 tf.flags.DEFINE_string('load_model','20171109-1200',
                         'folder of saved model that you wish to continue training (e.g. 20170725-1207), default: None')
-tf.flags.DEFINE_bool('Test_model', True,
-                     'use lsgan (mean squared error) or cross entropy loss, default: True')
 
 def train():
     if FLAGS.load_model is not None:
@@ -93,35 +90,22 @@ def train():
             fake_pool = [ImagePool(FLAGS.pool_size) for i in xrange(FLAGS.number_domain)]
             
             while not coord.should_stop():
-                # get previously generated images
-                #Probility = np.random.randint(2,size = 1)
+
+                # Fake images which are corresponding to 11 domains
+                # 'domain_idx' to select which domain except for anchor to synthesize anchor doamin image
+                #Using loop to make 'domain_idx' increment and reset
                 fake_ =[cycle_gan.loss[domain_idx][-1]] +  [cycle_gan.loss[i][-2] for i in xrange(FLAGS.number_domain-1)]
-                print 'fake_'
+                # Output special fake images from current execution
                 fake_gene= sess.run(fake_)
-                print 'fake_gene'
-                #fake_y_val, fake_x_val,fake_z_val,fake_x_from_z_val = sess.run([fake_y, fake_x, fake_z, fake_x_from_z])
+                # Building input dictionary for optimal function 
                 feed_dict={cycle_gan.fake_set[i]: fake_pool[i].query(fake_gene[i]) for i in xrange(FLAGS.number_domain)}
-                print 'fake_gene'
-                if not FLAGS.Test_model:
-                # train
-                    _, G_loss_val, D_Y_loss_val, F_loss_val, D_X_loss_val, summary = (
-              	    sess.run([optimizers, G_loss, D_Y_loss, F_loss, D_X_loss, summary_op], feed_dict))
-                    train_writer.add_summary(summary, step)
-                    train_writer.flush()
-                    domain_idx +=1
-                else:
-                    acount +=1
-                    while acount>0:
-                        raw_image_generated_images =sess.run(cycle_gan.raw_image_generated_images,feed_dict)
-                        pdb.set_trace()
-                        visualization(raw_image_generated_images,acount,labels)
-                        acount +=1
-                        print acount 
-                        if acount == 100:
-               	            break
-                    if domain_idx ==FLAGS.number_domain-1:
-                    	domain_idx = 0
-                print(step)
+                _, G_loss_val, D_Y_loss_val, F_loss_val, D_X_loss_val, summary = (
+              	sess.run([optimizers, G_loss, D_Y_loss, F_loss, D_X_loss, summary_op], feed_dict))
+                train_writer.add_summary(summary, step)
+                train_writer.flush()
+                domain_idx +=1
+                if domain_idx ==FLAGS.number_domain-1:
+                	domain_idx = 0
                 if step % 100 == 0:
                     logging.info('-----------Step %d:-------------' % step)
                     logging.info('  G_loss   : {}'.format(G_loss_val))
@@ -131,7 +115,6 @@ def train():
                 if step % 10000 == 0 and step > 0:
                     save_path = saver.save(sess, checkpoints_dir + "/model.ckpt", global_step=step)
                     logging.info("Model saved in file: %s" % save_path)
-                
                 step += 1
         except KeyboardInterrupt:
             logging.info('Interrupted')
@@ -139,9 +122,8 @@ def train():
         except Exception as e:
             coord.request_stop(e)
         finally:
-          #save_path = saver.save(sess, checkpoints_dir + "/model.ckpt", global_step=step)
-          #logging.info("Model saved in file: %s" % save_path)
-          # When done, ask the threads to stop.
+            save_path = saver.save(sess, checkpoints_dir + "/model.ckpt", global_step=step)
+            logging.info("Model saved in file: %s" % save_path)
             coord.request_stop()
             coord.join(threads)
 

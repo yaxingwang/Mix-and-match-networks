@@ -35,7 +35,7 @@ tf.flags.DEFINE_float('pool_size', 50,
 tf.flags.DEFINE_integer('ngf', 64,
                         'number of gen filters in first conv layer, default: 64')
 
-tf.flags.DEFINE_string('test_file', './dataset/domain_',
+tf.flags.DEFINE_string('test_file', './dataset/test/domain_',
                        'tfrecords file for training, default: ./dataset/domain_11.tfrecords')
 tf.flags.DEFINE_string('saved_model','checkpoints/20171109-1200/model.ckpt-7703',
                         'folder of saved model that you want to restore), default: checkpoints/20171109-1200/model.ckpt-7703')
