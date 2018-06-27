@@ -1,0 +1,155 @@
+import numpy as np
+import matplotlib.image as mping
+from matplotlib import pyplot as plt
+
+
+def _discrete_matshow_adaptive(data, labels_names=[], counter = 0, title=""):
+    """Displays segmentation results using colormap that is adapted
+    to a number of classes. Uses labels_names to write class names
+    aside the color label. Used as a helper function for 
+    visualize_segmentation_adaptive() function.
+    
+    Parameters
+    ----------
+    data : 2d numpy array (width, height)
+        Array with integers representing class predictions
+    labels_names : list
+        List with class_names
+    """
+    
+    fig_size = [14, 12]
+    plt.rcParams["figure.figsize"] = fig_size
+    
+    #get discrete colormap
+    cmap = plt.get_cmap('Paired', np.max(data)-np.min(data)+1)
+    
+    # set limits .5 outside true range
+    mat = plt.matshow(data,
+                      cmap=cmap,
+                      vmin = np.min(data)-.5,
+                      vmax = np.max(data)+.5)
+    
+    #tell the colorbar to tick at integers
+    cax = plt.colorbar(mat,
+                       ticks=np.arange(np.min(data),np.max(data)+1))
+    
+    # The names to be printed aside the colorbar
+    if labels_names:
+        cax.ax.set_yticklabels(labels_names)
+    
+    #if title:
+    #    plt.suptitle(title, fontsize=15, fontweight='bold')
+    plt.savefig('./visualization/annotation_%d.png'%counter, bbox_inches='tight', pad_inches = 0)
+    plt.gcf().clear()
+    #plt.show()
+
+        
+def _visualize_segmentation_adaptive(predictions, segmentation_class_lut, counter= 0, title="Segmentation"):
+    """Displays segmentation results using colormap that is adapted
+    to a number of classes currently present in an image, instead
+    of PASCAL VOC colormap where 21 values is used for
+    all images. Adds colorbar with printed names against each color.
+    Number of classes is renumerated starting from 0, depending
+    on number of classes that are present in the image.
+    
+    Parameters
+    ----------
+    predictions : 2d numpy array (width, height)
+        Array with integers representing class predictions
+    segmentation_class_lut : dict
+        A dict that maps class number to its name like
+        {0: 'background', 100: 'airplane'}
+        
+    """
+    
+    # TODO: add non-adaptive visualization function, where the colorbar
+    # will be constant with names
+    
+
+    unique_classes, relabeled_image = np.unique(predictions,
+                                                return_inverse=True)
+
+    relabeled_image = relabeled_image.reshape(predictions.shape)
+
+    labels_names = []
+
+    for index, current_class_number in enumerate(unique_classes):
+
+        labels_names.append(str(index) + ' ' + segmentation_class_lut[current_class_number])
+
+    _discrete_matshow_adaptive(data=relabeled_image, labels_names=labels_names, counter = counter, title=title)
+
+def visualize_raw_image_synth_images(raw_img,raw_depth,predict_depth,generated_image, predictions, segmentation_class_lut, counter= 0, title="Segmentation"):
+    # visualize the raw annotation  
+    _visualize_segmentation_adaptive(predictions[0], segmentation_class_lut, counter= counter, title="raw annotation")
+    _visualize_segmentation_adaptive(predictions[1], segmentation_class_lut, counter= counter + 1, title="predict annotation")
+    fig = plt.figure()
+    a = fig.add_subplot(2,3,1)
+    im = plt.imshow(raw_img)##gray,hot
+    plt.axis('off')
+    im.axes.get_xaxis().set_visible(False)
+    im.axes.get_yaxis().set_visible(False)
+    #fig.savefig('proba_global.png', bbox_inches='tight', pad_inches = 0, dpi=100)
+    a.set_title('Raw_Photo')
+
+    a = fig.add_subplot(2,3,4)
+    im = plt.imshow(generated_image)##gray,hot
+    plt.axis('off')
+    im.axes.get_xaxis().set_visible(False)
+    im.axes.get_yaxis().set_visible(False)
+    #fig.savefig('proba_global.png', bbox_inches='tight', pad_inches = 0, dpi=100)
+    a.set_title('Gen_Photo')
+
+
+    a = fig.add_subplot(2,3,2)
+    annotation_prediction = mping.imread('./visualization/annotation_%d.png'%counter)
+    anno_gr = plt.imshow(annotation_prediction)
+    plt.axis('off')
+    anno_gr.axes.get_xaxis().set_visible(False)
+    anno_gr.axes.get_yaxis().set_visible(False)
+    a.set_title('Raw_label')
+
+    a = fig.add_subplot(2,3,5)
+    annotation_prediction = mping.imread('./visualization/annotation_%d.png'%(counter + 1))
+    anno_pred = plt.imshow(annotation_prediction)
+    plt.axis('off')
+    anno_pred.axes.get_xaxis().set_visible(False)
+    anno_pred.axes.get_yaxis().set_visible(False)
+    a.set_title('Pre_label')
+
+    # raw depth
+    a = fig.add_subplot(2,3,3)
+    anno_pred = plt.imshow(raw_depth)
+    plt.axis('off')
+    im.axes.get_xaxis().set_visible(False)
+    im.axes.get_yaxis().set_visible(False)
+    a.set_title('Raw_depth')
+    # prediction depth
+    a = fig.add_subplot(2,3,6)
+    anno_pred = plt.imshow(predict_depth)
+    plt.axis('off')
+    im.axes.get_xaxis().set_visible(False)
+    im.axes.get_yaxis().set_visible(False)
+    a.set_title('Pre_depth')
+    
+    fig.savefig('./visualization/photo_annotation_depth_%d.png'%counter , bbox_inches='tight', pad_inches = 0, dpi=100)
+
+ #   def visualize_depth():
+ #   import matplotlib.pyplot as plt
+ #   import numpy as np
+ #
+ #   grid = np.random.random((10,10))
+ #
+ #   fig, (ax1, ax2, ax3) = plt.subplots(nrows=3, figsize=(6,10))
+ #
+ #   ax1.imshow(grid)
+ #   ax1.set_title('Default')
+ #
+ #   ax2.imshow(grid)
+ #   ax2.set_title('Auto-scaled Aspect')
+ #
+ #   ax3.imshow(grid)
+ #   ax3.set_title('Manually Set Aspect')
+ #
+ #   plt.tight_layout()
+ #   plt.show()

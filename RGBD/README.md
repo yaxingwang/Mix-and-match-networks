@@ -2,37 +2,38 @@
 
 This project is to do many-to-many mapping on color dataset.
 
-<p align="center"><img width="100%" height='60%'src="visualization_color/11_domains/color.png" /></p>
+<p align="center"><img width="100%" height='60%'src="images/comparation.png" /></p>
 
 # Overview 
 - [Dependences](#dependences)
 - [Installation](#installtion)
-- [Create data](#creat data)
+- [Create data](#create data)
 - [Instructions](#instructions)
 - [Citation](#citation)
 - [Contact](#contact)
 # Dependences 
 - Python2.7, NumPy, SciPy, NVIDIA GPU
 - **Tensorflow:** the version should be more 1.0(https://www.tensorflow.org/) and [TensorBoard](https://www.tensorflow.org/programmers_guide/summaries_and_tensorboard)
-- **Dataset:** Domain-specific color name dataset(https://drive.google.com/file/d/1xUU8B8vC3rxsA8eAOlyEs3ZyB5fgC0il/view) which is collected by [Luyu](https://yulu0724.github.io/) and compressed into tfrecords.  
+- **Dataset:**  [SceneNet RGB-D](https://robotvault.bitbucket.io/scenenet-rgbd.html) 
 
 # Installation 
 - Install Tensorflow and TensorBoard
 
 # Create data
-We provie script to compress your data to tfrecord. `build_data.py` helps you to creat your data 
+
+- Download RGBD dataset: 17 folders(using seriver to download and unzip)
+- Changing path of  `data_to_tfrecords.py` to get tfrecord 
 
 # Instructions
 - Cloning the repository
 ```bash
 $ git clone  https://github.com/yaxingwang/Mix-and-match-networks.git
-$ cd Mix-and-match-networks/color/
+$ cd Mix-and-match-networks/RGBD/
 ```
 - Downloading the dataset
 ```bash
-$ mkdir dataset 
+$ mkdir dataset and copy tfrecord into  dataset    
 ```
-Unzipping the downloaded color data and moving contained two folders(`train` and `test`) into `dataset`
 
 - Training 
 ```bash
