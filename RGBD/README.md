@@ -43,11 +43,6 @@ $ cd logs
 $ tensorboard --logdir=./ 
 ```
 
-<p align="center"><img width="80%" height='50%'src="visualization_color/11_domains/synthesized_images.png" /></p>
-
-Here we use attentaion in latest space by using 'sigmoid', note it does not influence performance without attention or not
-
-- Testing 
 
 The pretrained model is provided [here](https://drive.google.com/drive/folders/10K-Ip_EMWBTRtBkvxFSiDOylkVZymWnz). If you have trained model, just put it as following:
 
