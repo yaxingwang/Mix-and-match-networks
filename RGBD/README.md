@@ -32,10 +32,6 @@ $ python data_to_tfrecords.py
 $ git clone  https://github.com/yaxingwang/Mix-and-match-networks.git
 $ cd Mix-and-match-networks/RGBD/
 ```
-- Downloading the dataset
-```bash
-$ mkdir dataset and copy tfrecord into  dataset    
-```
 
 - Training 
 ```bash
