@@ -1,48 +1,84 @@
-# Transferring GANs generating images from limited data
-# Abstract: 
-Transferring the knowledge of pretrained networks to new domains by means of finetuning is a widely used practice for applications based on discriminative models. To the best of our knowledge this practice has not been studied within the context of generative deep networks. Therefore, we study domain adaptation applied to image generation with generative adversarial networks. We evaluate several aspects of domain adaptation, including the impact of target domain size, the relative distance between source and target domain, and the initialization of conditional GANs. Our results show that using knowledge from pretrained networks can shorten the convergence time and can significantly improve the quality of the generated images, especially when the target data is limited. We show that these conclusions can also be drawn for conditional GANs even when the pretrained model was trained without conditioning. Our results also suggest that density may be more important than diversity and a dataset with one or few densely sampled classes may be a better source model than more diverse datasets such as ImageNet or Places.
+# Object recoloring
+
+This project is to do many-to-many mapping on color dataset.
+
+<p align="center"><img width="100%" height='60%'src="visualization_color/11_domains/color.png" /></p>
 
 # Overview 
 - [Dependences](#dependences)
 - [Installation](#installtion)
+- [Create data](#creat data)
 - [Instructions](#instructions)
-- [Results](#results)
-- [References](#references)
+- [Citation](#citation)
 - [Contact](#contact)
 # Dependences 
 - Python2.7, NumPy, SciPy, NVIDIA GPU
-- **Tensorflow:** the version should be more 1.0(https://www.tensorflow.org/)
-- **Dataset:** lsun-bedroom(http://lsun.cs.princeton.edu/2017/) or your dataset 
+- **Tensorflow:** the version should be more 1.0(https://www.tensorflow.org/) and [TensorBoard](https://www.tensorflow.org/programmers_guide/summaries_and_tensorboard)
+- **Dataset:** Domain-specific color name dataset(https://drive.google.com/file/d/1xUU8B8vC3rxsA8eAOlyEs3ZyB5fgC0il/view) which is collected by [Luyu](https://yulu0724.github.io/) and compressed into tfrecords.  
 
 # Installation 
-- Install tensorflow
-- Opencv 
+- Install Tensorflow and TensorBoard
+
+# Create data
+We provie script to compress your data to tfrecord. `build_data.py` helps you to creat your data 
+
 # Instructions
-- Using 'git clone https://github.com/yaxingwang/Transferring-GANs'
+- Cloning the repository
+```bash
+$ git clone  https://github.com/yaxingwang/Mix-and-match-networks.git
+$ cd Mix-and-match-networks/color/
+```
+- Downloading the dataset
+```bash
+$ mkdir dataset 
+```
+Unzipping the downloaded color data and moving contained two folders(`train` and `test`) into `dataset`
 
-    You will get new folder whose name is 'Transferring-GANs' in your current path, then  use 'cd Transferring-GANs' to enter the downloaded new folder
-    
-- Download [pretrain models](https://drive.google.com/drive/folders/1KYzR-NEwKT1582USX31samfZ3JoJ5ija)
+- Training 
+```bash
+$ python train.py 
+```
+During training, the loss and generated image can be monitored by tensorboard as:
+```bash
+$ cd checkpoints/20180607-1244 
+$ tensorboard --logdir=./ 
+```
 
-    Uncompressing downloaded folder to current folder, then you have new folder 'transfer_model'  which contains two folders: 'conditional', 'unconditional', each of which has four folders: 'imagenet', 'places', 'celebA', 'bedroom'
+Note that `20180607-1244` is automatically generated whenever you run script
+<p align="center"><img width="80%" height='50%'src="visualization_color/11_domains/synthesized_images.png" /></p>
 
-- Download dataset or use your dataset.
+Here we use attentaion in latest space by using 'sigmoid', note it does not influence performance without attention or not
 
-    I have shown one example and you could make it with same same form.
+- Testing 
 
-- Run 'python transfer_gan.py'
+The pretrained model is provided [here](https://drive.google.com/drive/folders/1Ny9g4_3IPxHXQirjPrhLFAZTlCEgMSIH). If you have trained model, just put it as following:
+```bash
+$ python test.py --test_file chedkpoints/20171109-1200/model.ckpt-7703 
+```
+The transferred images will be saved in `visualization_color`
 
-   Runing code with default setting. The pretrained model can be seleted by changing the parameter 'TARGET_DOMAIN'
- 
-- Conditional GAN 
-  If you are interested in using conditional model, just setting parameter 'ACGAN = True'
-# Results 
-Using pretrained models not only get high performance, but fastly attach convergence. In following figure, we show conditional and unconditional settings.
-![unconditional_conditional](https://user-images.githubusercontent.com/16056485/40908899-5d8484be-67e8-11e8-894c-d4b19a54e48c.png)
+# Citation
 
-# References 
-- \[1\] 'Improved Training of Wasserstein GANs' by Ishaan Gulrajani et. al, https://arxiv.org/abs/1704.00028, (https://github.com/igul222/improved_wgan_training)[code] 
-- \[2\] 'GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash Equilibrium' by Martin Heusel  et. al, https://arxiv.org/abs/1704.00028
+If this work or color dataset are useful for your research, please cite  papers:
+```
+@article{wang2018mix,
+  title={Mix and match networks: encoder-decoder alignment for zero-pair image translation},
+    author={Wang, Yaxing and van de Weijer, Joost and Herranz, Luis},
+      journal={arXiv preprint arXiv:1804.02199},
+        year={2018}
+        }
+ @article{yu2018weakly,
+   title={Weakly Supervised Domain-Specific Color Naming Based on Attention},
+     author={Yu, Lu and Cheng, Yongmei and van de Weijer, Joost},
+       journal={arXiv preprint arXiv:1805.04385},
+         year={2018}
+         }
+
+```
+
+
+
+
 # Contact
 
 If you run into any problems with this code, please submit a bug report on the Github site of the project. For another inquries pleace contact with me: yaxing@cvc.uab.es
