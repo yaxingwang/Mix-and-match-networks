@@ -7,7 +7,7 @@ This project is to do many-to-many mapping on color dataset.
 # Overview 
 - [Dependences](#dependences)
 - [Installation](#installtion)
-- [Create data](#create data)
+- [Data](#Data)
 - [Instructions](#instructions)
 - [Citation](#citation)
 - [Contact](#contact)
