@@ -4,11 +4,7 @@ import scipy.misc
 import numpy as np
 import pdb
 
-<<<<<<< HEAD
-from model1 import mmnet
-=======
 from model import mmnet
->>>>>>> d6edd34f9ee431ec69a8f243165a4786c726a215
 import tensorflow as tf
 
 parser = argparse.ArgumentParser(description='')
