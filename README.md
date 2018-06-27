@@ -14,20 +14,3 @@
 <br>
 <p align="center"><img width="100%" height='60%'src="RGBD/images/drawing1.png" /></p>
 
-
-# Overview 
-- [Dependences](#dependences)
-- [Installation](#installtion)
-- [Instructions](#instructions)
-- [Results](#results)
-- [References](#references)
-- [Contact](#contact)
-# Dependences 
-- Python2.7, NumPy, SciPy, NVIDIA GPU
-- **Tensorflow:** the version should be more 1.0(https://www.tensorflow.org/)
-- **Dataset:** lsun-bedroom(http://lsun.cs.princeton.edu/2017/) or your dataset 
-# Installation 
-- Install tensorflow
-- Opencv 
-# Instructions
-
