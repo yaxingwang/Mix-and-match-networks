@@ -19,7 +19,7 @@ This project is to do many-to-many mapping on color dataset.
 # Installation 
 - Install Tensorflow and TensorBoard
 
-# Create data
+# Data
 - Download RGBD dataset: 17 folders(using seriver to download and unzip)
 - Changing path of  `data_to_tfrecords.py` to get tfrecord 
 
