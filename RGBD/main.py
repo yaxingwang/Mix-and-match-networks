@@ -4,7 +4,7 @@ import scipy.misc
 import numpy as np
 import pdb
 
-from github_model import pix2pix
+from github_model import mmnet
 import tensorflow as tf
 
 parser = argparse.ArgumentParser(description='')
@@ -47,8 +47,9 @@ def main(_):
 
     config = tf.ConfigProto()
     config.gpu_options.allow_growth=True
+    pdb.set_trace()
     with tf.Session(config=config) as sess:
-        model = pix2pix(sess, image_size=args.fine_size, batch_size=args.batch_size,
+        model = mmnet(sess, image_size=args.fine_size, batch_size=args.batch_size,
                         output_size=args.fine_size, dataset_name=args.dataset_name,
                         checkpoint_dir=args.checkpoint_dir, sample_dir=args.sample_dir)
 

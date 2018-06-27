@@ -14,11 +14,11 @@ This project is to do many-to-many mapping on color dataset.
 # Dependences 
 - Python2.7, NumPy, SciPy, NVIDIA GPU
 - **Tensorflow:** the version should be more 1.0(https://www.tensorflow.org/) and [TensorBoard](https://www.tensorflow.org/programmers_guide/summaries_and_tensorboard)
-- **Dataset:** Domain-specific color name datase(https://drive.google.com/file/d/1xUU8B8vC3rxsA8eAOlyEs3ZyB5fgC0il/view) which is collected by [Luyu](https://yulu0724.github.io/) and compressed into tfrecords.  
+- **Dataset:** Domain-specific color name dataset(https://drive.google.com/file/d/1xUU8B8vC3rxsA8eAOlyEs3ZyB5fgC0il/view) which is collected by [Luyu](https://yulu0724.github.io/) and compressed into tfrecords.  
 
 # Installation 
-- Install tensorflow and tensorBoard
-- Opencv 
+- Install Tensorflow and TensorBoard
+
 # Create data
 We provie script to compress your data to tfrecord. `build_data.py` helps you to creat your data 
 
@@ -47,7 +47,7 @@ $ tensorboard --logdir=./
 Note that `20180607-1244` is automatically generated whenever you run script
 <p align="center"><img width="80%" height='50%'src="visualization_color/11_domains/synthesized_images.png" /></p>
 
-Here we use attentaion in latest space by using 'sigmoid', note it does not influence performace without attention or not
+Here we use attentaion in latest space by using 'sigmoid', note it does not influence performance without attention or not
 
 - Testing 
 
