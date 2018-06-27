@@ -44,7 +44,7 @@ $ tensorboard --logdir=./
 ```
 
 
-The pretrained model is provided [here](https://drive.google.com/drive/folders/10K-Ip_EMWBTRtBkvxFSiDOylkVZymWnz). If you have trained model, just put it as following:
+The pretrained model is provided [here](https://drive.google.com/drive/folders/10K-Ip_EMWBTRtBkvxFSiDOylkVZymWnz).
 
 # Citation
 
