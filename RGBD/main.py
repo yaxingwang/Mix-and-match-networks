@@ -4,7 +4,7 @@ import scipy.misc
 import numpy as np
 import pdb
 
-from github_model import mmnet
+from model import mmnet
 import tensorflow as tf
 
 parser = argparse.ArgumentParser(description='')
