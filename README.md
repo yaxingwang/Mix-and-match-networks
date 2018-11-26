@@ -1,7 +1,4 @@
 <img src='RGBD/images/overview.png' align="right" width=384>
-
-<br><br><br>
-
 # Mix-and-match-networks
 ### [[paper]](https://arxiv.org/pdf/1804.02199.pdf)
 
