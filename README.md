@@ -10,7 +10,7 @@
  IEEE Conference on Computer Vision and Pattern Recognition ([CVPR](http://cvpr2018.thecvf.com/)), 2018
 
 # Object recoloring 
-This project is to do Mix-and-match-networks(M&Mnet) on color and RGBD datasets. We give two folders(color and RGBD) where we share corresponding code and detail information to train our M&Mnet. 
+This project is to do Mix-and-match-networks(M&Mnet) on color and RGBD datasets. We give two folders([color](https://github.com/yaxingwang/Mix-and-match-networks/tree/master/color/) and [RGBD](https://github.com/yaxingwang/Mix-and-match-networks/tree/master/RGBD/ )) where we share corresponding codes and detail information to train our M&Mnet. 
 
 # Dataset 
 - Color: the visualization   
@@ -37,10 +37,7 @@ If this work or color dataset are useful for your research, please cite  papers:
          }
 
 ```
-
-
 # Contact
-
 If you run into any problems with this code, please submit a bug report on the Github site of the project. For another inquries pleace contact with me: yaxing@cvc.uab.es
 
 
